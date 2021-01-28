@@ -94,7 +94,7 @@ $queryData | where-Object {$_ -ne ''} | ForEach({
         try {
             $name = Resolve-DnsName -Name $_ -DnsOnly -EA Stop | Select -First 1 -ExpandProperty NameHost -EA Stop
         } catch {
-            Write-Warning -Message ìDNS Record not found for $_î
+            Write-Warning -Message ‚ÄúDNS Record not found for $_‚Äù
             $name = $null
         }
     }
@@ -135,7 +135,7 @@ $queryData | where-Object {$_ -ne ''} | ForEach({
 
     } | Select-Object -Property "Name", "IP", "Status", "Response Time"
     Write-Host "[$counter/$queryMax] Finished $_ "
-}) | Where-Object {$_ -ne $null} | Export-Csv -Delimiter ',' -Path $resultsOutput -NoTypeInformation -Append
+}) | Where-Object {$_ -ne ''} | Export-Csv -Delimiter ',' -Path $resultsOutput -NoTypeInformation -Append
 Write-Host $item.padright(99,'*')
 Write-Host "Completed task. Press any key to exit."
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
